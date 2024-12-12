@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>To Do List</title>
+</head>
+<body>
+<h1>투두리스트</h1>
+<form th:action="@{/todo/create}" method="post">
+    <label>
+        <input name="content" placeholder="오늘의 할 일을 적어보세요!" style="width: 300px; padding: 10px; font-size: 16px;"/>
+    </label>
+    <button style="padding: 10px 20px; font-size: 16px;">작성</button>
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>할 일</th>
+        <th>수행 여부</th>
+        <th>삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="todoEntity : ${toDoEntityList}">
+        <td th:text="${todoEntity.id}"></td>
+        <td th:text="${todoEntity.content}"></td>
+        <td th:text="${todoEntity.completed ? '완료' : '미완료'}"></td>
+        <td>
+            <button onclick="deleteItem([[${todoEntity.id}]])">삭제</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+
+    function deleteItem(id){
+        console.log(id)
+        const url = "/todo/delete/"+id
+        $.ajax({
+            type:'delete',
+            url:url,
+            contentType:'application/json; charset=utf-8'
+            }).done(function() {
+            alert('할 일이 삭제되었습니다.');
+            window.location.href = '/';
+            }).fail(function (error){
+            alert(JSON.stringify(error));
+            });
+           }
+</script>
+</html>
