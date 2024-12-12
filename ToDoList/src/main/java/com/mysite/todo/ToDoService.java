@@ -30,4 +30,11 @@ public class ToDoService {
 
         this.toDoRepository.delete(toDoEntity);
     }
+    @Transactional
+    public void updateStatus(Integer id, Boolean completed) {
+        ToDoEntity toDoEntity = toDoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 아이템이 없습니다. id=" + id));
+        toDoEntity.setCompleted(completed);
+        toDoRepository.save(toDoEntity);
+    }
 }
