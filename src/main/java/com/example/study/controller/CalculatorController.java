@@ -1,4 +1,4 @@
-package com.example.study.controller.calculator;
+package com.example.study.controller;
 
 import com.example.study.dto.calculator.request.CalculatorAddRequest;
 import org.springframework.web.bind.annotation.*;
